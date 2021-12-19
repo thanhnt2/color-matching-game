@@ -1,11 +1,11 @@
 import { getRandomColorPairs } from "./colorHelper.js";
 
 const GAME_STATE = {
-  PENDING: 'pending',
-  PLAYING: 'playing',
-  BLOCKING: 'blocking',
-  FINISHED: 'finished'
-}
+  PENDING: "pending",
+  PLAYING: "playing",
+  BLOCKING: "blocking",
+  FINISHED: "finished",
+};
 
 const main = () => {
   // Game state
@@ -20,29 +20,29 @@ const main = () => {
   let randomColorList = [];
 
   // Query elements
-  const colorItemList = document.querySelectorAll('#colorList > li');
-  const timerElement = document.querySelector('.game .game__timer');
-  const playAgainButton = document.querySelector('.game .game__button');
-  const colorBackground = document.querySelector('.color-background');
+  const colorItemList = document.querySelectorAll("#colorList > li");
+  const timerElement = document.querySelector(".game .game__timer");
+  const playAgainButton = document.querySelector(".game .game__button");
+  const colorBackground = document.querySelector(".color-background");
 
   const init = () => {
     randomColorList = getRandomColorPairs(PAIRS_COUNT);
 
     // Binding events
     colorItemList.forEach((item, idx) => {
-      item.classList.remove('active');
+      item.classList.remove("active");
 
-      const overlayElement = item.querySelector('.overlay');
+      const overlayElement = item.querySelector(".overlay");
       if (overlayElement) {
         overlayElement.style.backgroundColor = randomColorList[idx];
       }
 
-      item.addEventListener('click', () => handleColorClick(item, idx));
+      item.addEventListener("click", () => handleColorClick(item, idx));
     });
 
-    // Start count down 
+    // Start count down
     startCountdown();
-  }
+  };
 
   const reset = () => {
     // Reset game state
@@ -52,11 +52,11 @@ const main = () => {
     matchCount = 0;
 
     timerElement.textContent = `${GAME_TIME}s`;
-    colorBackground.style.backgroundColor = 'goldenrod';
+    colorBackground.style.backgroundColor = "goldenrod";
 
     // Hide play again button
-    playAgainButton.style.display = 'none';
-  }
+    playAgainButton.style.display = "none";
+  };
 
   // Start countdown
   const startCountdown = () => {
@@ -69,32 +69,31 @@ const main = () => {
         gameState = GAME_STATE.FINISHED;
         clearInterval(countdownInterval);
 
-        timerElement.textContent = 'Game Over!';
-        playAgainButton.style.display = 'block';
-      };
+        timerElement.textContent = "Game Over!";
+        playAgainButton.style.display = "block";
+      }
     }, 1000);
-  }
-
+  };
 
   // Handle play again button
-  playAgainButton.addEventListener('click', e => {
+  playAgainButton.addEventListener("click", (e) => {
     reset();
     init();
   });
 
-
   const handleColorClick = (item, idx) => {
     if (
-      !item
-      || item.classList.contains('active')
-      || gameState === GAME_STATE.BLOCKING
-      || gameState === GAME_STATE.FINISHED
-      || timer < 0
-    ) return;
+      !item ||
+      item.classList.contains("active") ||
+      gameState === GAME_STATE.BLOCKING ||
+      gameState === GAME_STATE.FINISHED ||
+      timer < 0
+    )
+      return;
 
     // Add item to selection
     selection.push(idx);
-    item.classList.add('active');
+    item.classList.add("active");
     if (selection.length < 2) return;
 
     // Check matching when two colors selected
@@ -106,8 +105,8 @@ const main = () => {
     if (!isMatch) {
       gameState = GAME_STATE.BLOCKING;
       setTimeout(() => {
-        colorItemList[selection[0]].classList.remove('active');
-        colorItemList[selection[1]].classList.remove('active');
+        colorItemList[selection[0]].classList.remove("active");
+        colorItemList[selection[1]].classList.remove("active");
 
         selection = [];
         gameState = GAME_STATE.PLAYING;
@@ -125,12 +124,11 @@ const main = () => {
       // Stop timer
       clearInterval(countdownInterval);
 
-      timerElement.textContent = 'You WIN! 😍';
-      playAgainButton.style.display = 'block';
+      timerElement.textContent = "You WIN! 😍";
+      playAgainButton.style.display = "block";
       gameState === GAME_STATE.FINISHED;
     }
-  }
-
+  };
 
   // MAIN LOGIC
   init();

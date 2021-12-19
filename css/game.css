@@ -66,6 +66,9 @@
 .game__button:active {
   opacity: 0.7;
 }
+.game__button-wrapper > button.show {
+  display: inline-block
+}
 
 .color-list {
   display: flex;
