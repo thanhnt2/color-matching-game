@@ -93,3 +93,9 @@ export function createTimer({ seconds, onChange, onFinish }) {
 
   return { start, clear };
 }
+
+export function setBackgroundColor(color) {
+  const backgroundElement = document.querySelector(".color-background");
+
+  if (backgroundElement) backgroundElement.style.backgroundColor = color;
+}

@@ -5,6 +5,7 @@ import {
   getInActiveColorList,
   getRandomColorPairs,
   hidePlayAgainButton,
+  setBackgroundColor,
   setTimerText,
   showPlayAgainButton,
 } from "./colorHelper-practise.js";
@@ -57,6 +58,7 @@ function handleColorClick(liElement) {
   const isMatch = firstColor === secondColor;
 
   if (isMatch) {
+    setBackgroundColor(firstColor);
     // if win
     const isWin = getInActiveColorList().length === 0;
     if (isWin) {
@@ -68,6 +70,7 @@ function handleColorClick(liElement) {
     }
 
     selections = [];
+
     return;
   }
 
